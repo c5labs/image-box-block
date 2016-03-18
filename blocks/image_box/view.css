@@ -1,0 +1,43 @@
+/*
+| 3. Boxes
+*/
+
+.box > div {
+  background-color: #333;
+  color: #cccccc;
+}
+
+.box a img,
+.box img {
+  max-width: 100%;
+  height: auto;
+}
+
+.box h2 {
+  font-size: 22px !important;
+  margin: 0 0 10px !important;
+  color: #fff !important;
+}
+
+/*
+| Tablet Only
+*/
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+
+  .box h2 {
+    font-size: 18px !important;
+    margin: 0 0 10px !important;
+    color: #fff !important;
+  }
+
+}
+
+.box .content span {
+  display: block;
+  margin-bottom: 15px;
+}
+
+.box .content {
+  display: block;
+  padding: 20px;
+}
