@@ -20,6 +20,10 @@ defined('C5_EXECUTE') or die('Access Denied.');
 		display: none;
 	}
 
+	div.ccm-page-selector {
+		margin-top: 0;
+	}
+
 </style>
 <div id="imageBlockForm" class="row">
 	<fieldset>
@@ -45,40 +49,32 @@ defined('C5_EXECUTE') or die('Access Denied.');
 			$(function(){
 				$('select[name=link_type]').change(function(){
 					if ('page_selector' === $(this).val()) {
-						$('#pageSelector').fadeIn();
-						$('#manualLink').fadeIn();
-						$('#buttonText').fadeOut();
+						$('#pageSelector, #buttonText').show();
+						$('#manualLink').hide();
 					} else if ('manual' === $(this).val()) {
-						$('#pageSelector').fadeOut();
-						$('#manualLink').fadeIn();
-						$('#buttonText').fadeIn();
+						$('#pageSelector').hide();
+						$('#manualLink, #buttonText').show();
 					} else {
-						$('#pageSelector').fadeOut();
-						$('#manualLink').fadeOut();
-						$('#buttonText').fadeOut();
+						$('#pageSelector, #manualLink, #buttonText').hide();
 					}
 				}).trigger('change');
 			});
 			</script>
 		</div>
 
-		<div id="manualLink" class="form-group">
+		<div id="manualLink" class="form-group" style="display: none;">
 			<label for="link"><?php echo t('Link')?></label>
 			<?php echo $form->text('link', $controller->link, ['class' => 'form-control']); ?>
 		</div>
 
-		<div id="pageSelector" class="form-group">
+		<div id="pageSelector" class="form-group" style="display: none;">
 			<label for="linkCID"><?php echo t('Link')?></label>
-			<div class="input">	
-				<?php echo $page_selector->selectPage('linkCID', $controller->linkCID); ?>
-			</div>
+			<?php echo $page_selector->selectPage('linkCID', $controller->linkCID); ?>
 		</div>
 
-		<div id="buttonText" class="form-group">
-			<label for="button_text"><?php echo t('Button Text')?></label> <span style="color: #ccc;">(optional)</span><br>
-			<div class="input">	
-				<?php echo $form->text('button_text', $controller->button_text, ['class' => 'form-control']); ?>
-			</div>
+		<div id="buttonText" class="form-group" style="display: none;">
+			<label for="button_text"><?php echo t('Button Text')?></label> <span style="color: #ccc;">(<?php echo t('Optional')?>)</span>
+			<?php echo $form->text('button_text', $controller->button_text, ['class' => 'form-control']); ?>
 		</div>
 
 	</fieldset>
