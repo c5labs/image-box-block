@@ -1,43 +1,28 @@
-/*
-| 3. Boxes
-*/
-
-.box > div {
-  background-color: #333;
-  color: #cccccc;
+.image-box {
+  background-color: #fff;
+  color: #ccccc;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.box a img,
-.box img {
+.image-box-inner {
+  padding: 30px 30px;
+}
+
+.image-box a img,
+.image-box img {
   max-width: 100%;
   height: auto;
 }
 
-.box h2 {
-  font-size: 22px !important;
-  margin: 0 0 10px !important;
-  color: #fff !important;
+.image-box h2 {
+  margin-top: 0;
 }
 
-/*
-| Tablet Only
-*/
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-
-  .box h2 {
-    font-size: 18px !important;
-    margin: 0 0 10px !important;
-    color: #fff !important;
-  }
-
-}
-
-.box .content span {
+.image-box a.image-box-link {
   display: block;
-  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
-.box .content {
-  display: block;
-  padding: 20px;
+.image-box-empty {
+  color: #ccc;
 }
