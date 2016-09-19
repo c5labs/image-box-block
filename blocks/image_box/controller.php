@@ -32,51 +32,51 @@ class Controller extends BlockController
      *
      * @var string
      */
-	protected $btTable = 'btImageBox';
+    protected $btTable = 'btImageBox';
 
-	/**
+    /**
      * Block editor interface width.
      *
      * @var string
      */
-	protected $btInterfaceWidth = "340";
+    protected $btInterfaceWidth = '340';
 
-	/**
+    /**
      * Block editor interface height.
      *
      * @var string
      */
-	protected $btInterfaceHeight = "365";
+    protected $btInterfaceHeight = '365';
 
-	/**
+    /**
      * Cache the blocks database record?
      *
      * @var bool
      */
-	protected $btCacheBlockRecord = true;
+    protected $btCacheBlockRecord = true;
 
-	/**
+    /**
      * Cache the blocks output?
      *
      * @var bool
      */
-	protected $btCacheBlockOutput = true;
+    protected $btCacheBlockOutput = true;
 
     /**
      * Cache the block output for $_POST requests?
      *
      * @var bool
      */
-	protected $btCacheBlockOutputOnPost = true;
+    protected $btCacheBlockOutputOnPost = true;
 
     /**
      * Cache the blocks output for registered users?
      *
      * @var bool
      */
-	protected $btCacheBlockOutputForRegisteredUsers = false;
+    protected $btCacheBlockOutputForRegisteredUsers = false;
 
-	/**
+    /**
      * How long do we cache the block for?
      *
      * CACHE_LIFETIME = Until manually cleared or the
@@ -84,7 +84,7 @@ class Controller extends BlockController
      *
      * @var int
      */
-	protected $btCacheBlockOutputLifetime = CACHE_LIFETIME; //until manually updated or cleared
+    protected $btCacheBlockOutputLifetime = CACHE_LIFETIME; //until manually updated or cleared
 
     /**
      * The set within the block chooser interface
@@ -92,70 +92,70 @@ class Controller extends BlockController
      *
      * @var string
      */
-	protected $btDefaultSet = 'basic';
+    protected $btDefaultSet = 'basic';
 
-	/**
-	 * Get the blocks name.
-	 *
-	 * @return string
-	 */
-	public function getBlockTypeName()
-	{
-		return t("Image box");
-	}
+    /**
+     * Get the blocks name.
+     *
+     * @return string
+     */
+    public function getBlockTypeName()
+    {
+        return t('Image box');
+    }
 
-	/**
-	 * Get the blocks description.
-	 *
-	 * @return string
-	 */
-	public function getBlockTypeDescription()
-	{
-		return t("Simple image, text & link units.");
-	}
+    /**
+     * Get the blocks description.
+     *
+     * @return string
+     */
+    public function getBlockTypeDescription()
+    {
+        return t('Simple image, text & link units.');
+    }
 
-	/**
-	 * Add form hook.
-	 *
-	 * @return  void
-	 */
-	public function add()
-	{
-		$this->form();
-	}
+    /**
+     * Add form hook.
+     *
+     * @return  void
+     */
+    public function add()
+    {
+        $this->form();
+    }
 
-	/**
-	 * Edit form hook.
-	 *
-	 * @return void
-	 */
-	public function edit()
-	{
-		$this->form();
-	}
+    /**
+     * Edit form hook.
+     *
+     * @return void
+     */
+    public function edit()
+    {
+        $this->form();
+    }
 
-	/**
-	 * Set the data for blocks form.
-	 *
-	 * @return void
-	 */
-	public function form()
-	{
-		$form = Loader::helper('form');
-		$ps = Loader::helper('form/page_selector');
-		$al = Loader::helper('concrete/asset_library');
+    /**
+     * Set the data for blocks form.
+     *
+     * @return void
+     */
+    public function form()
+    {
+        $form = Loader::helper('form');
+        $ps = Loader::helper('form/page_selector');
+        $al = Loader::helper('concrete/asset_library');
 
-		$this->set('image_file', $this->getImageFileObject());
-		$this->set('page_selector', $ps);
-		$this->set('asset_library', $al);
-		$this->set('form', $form);
-	}
+        $this->set('image_file', $this->getImageFileObject());
+        $this->set('page_selector', $ps);
+        $this->set('asset_library', $al);
+        $this->set('form', $form);
+    }
 
     /**
      * Save the block record.
      *
      * @param  array $args
-     * @return boolean
+     * @return bool
      */
     public function save($args)
     {
@@ -168,45 +168,45 @@ class Controller extends BlockController
         return parent::save($args);
     }
 
-	/**
-	 * Get the file object associated with the block.
-	 *
-	 * @return mixed
-	 */
-	public function getImageFileObject()
-	{
-		return $this->fID > 0 ? File::getByID($this->fID) : null;
-	}
+    /**
+     * Get the file object associated with the block.
+     *
+     * @return mixed
+     */
+    public function getImageFileObject()
+    {
+        return $this->fID > 0 ? File::getByID($this->fID) : null;
+    }
 
-	/**
-	 * Get a formatted url for the resource the block links to.
-	 *
-	 * @return string
-	 */
-	public function getLinkUrl()
-	{
-		if ('page_selector' !== $this->link_type) {
-			return $this->link;
-		} else {
-			$path = Page::getByID($this->linkCID)->getCollectionPath();
+    /**
+     * Get a formatted url for the resource the block links to.
+     *
+     * @return string
+     */
+    public function getLinkUrl()
+    {
+        if ('page_selector' !== $this->link_type) {
+            return $this->link;
+        } else {
+            $path = Page::getByID($this->linkCID)->getCollectionPath();
 
-			return View::url($path ?: '/');
-		}
-	}
+            return View::url($path ?: '/');
+        }
+    }
 
-	/**
-	 * Get the associated images URL.
-	 *
-	 * @return string
-	 */
-	public function getImageUrl()
-	{
-		if ($this->fID > 0)
-		{
-			$f = $this->getImageFileObject()->getRecentVersion();
-			return $f->getUrl();
-		}
+    /**
+     * Get the associated images URL.
+     *
+     * @return string
+     */
+    public function getImageUrl()
+    {
+        if ($this->fID > 0) {
+            $f = $this->getImageFileObject()->getRecentVersion();
 
-		return '';
-	}
+            return $f->getUrl();
+        }
+
+        return '';
+    }
 }

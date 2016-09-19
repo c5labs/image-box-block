@@ -60,7 +60,7 @@ class Controller extends Package
      */
     public function getPackageName()
     {
-        return t("Image Box");
+        return t('Image Box');
     }
 
     /**
@@ -70,7 +70,7 @@ class Controller extends Package
      */
     public function getPackageDescription()
     {
-        return t("A block to allow easy addition of combined image, text & link units.");
+        return t('A block to allow easy addition of combined image, text & link units.');
     }
 
     /**

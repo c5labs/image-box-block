@@ -1,4 +1,5 @@
 <?php
+
 defined('C5_EXECUTE') or die('Access Denied.');
 /*
  * Block Add Template
@@ -9,5 +10,4 @@ defined('C5_EXECUTE') or die('Access Denied.');
  * @link     https://c5dev.com/add-ons/image-box
  */
 
-
-include('form.php');
+include 'form.php';

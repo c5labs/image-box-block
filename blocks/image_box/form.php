@@ -30,17 +30,17 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
 		<div class="form-group">
 			<label for="title"><?php echo t('Title')?></label>
-			<?php echo $form->text('title', $controller->title, array('class' => 'form-control')); ?>
+			<?php echo $form->text('title', $controller->title, ['class' => 'form-control']); ?>
 		</div>
 
 		<div class="form-group">
 			<label for="content"><?php echo t('Description')?></label> <span style="color: #ccc;">(<?php echo t('Optional')?>)</span>
-			<?php echo $form->textarea('content', $controller->content, array('class' => 'form-control')); ?>
+			<?php echo $form->textarea('content', $controller->content, ['class' => 'form-control']); ?>
 		</div>
 
 		<div class="form-group">
 			<label for="link_type"><?php echo t('Link Type')?></label>
-			<?php echo $form->select('link_type', array('none' => 'None', 'manual' => 'Manual', 'page_selector' => 'Page Selector'), $controller->link_type ?: 'page_selector', array('class' => 'form-control')); ?>
+			<?php echo $form->select('link_type', ['none' => 'None', 'manual' => 'Manual', 'page_selector' => 'Page Selector'], $controller->link_type ?: 'page_selector', ['class' => 'form-control']); ?>
 			<script>
 			$(function(){
 				$('select[name=link_type]').change(function(){
@@ -64,7 +64,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
 		<div id="manualLink" class="form-group">
 			<label for="link"><?php echo t('Link')?></label>
-			<?php echo $form->text('link', $controller->link, array('class' => 'form-control')); ?>
+			<?php echo $form->text('link', $controller->link, ['class' => 'form-control']); ?>
 		</div>
 
 		<div id="pageSelector" class="form-group">
@@ -77,7 +77,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 		<div id="buttonText" class="form-group">
 			<label for="button_text"><?php echo t('Button Text')?></label> <span style="color: #ccc;">(optional)</span><br>
 			<div class="input">	
-				<?php echo $form->text('button_text', $controller->button_text, array('class' => 'form-control')); ?>
+				<?php echo $form->text('button_text', $controller->button_text, ['class' => 'form-control']); ?>
 			</div>
 		</div>
 
