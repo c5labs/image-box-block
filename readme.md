@@ -1,6 +1,7 @@
 #Image Box Block for concrete5
-**Requires Concrete5 5.7.1+ & PHP 5.4+**
 A block to allow easy addition of combined image, text & link units.
+
+**Requires Concrete5 5.7.1+ & PHP 5.4+**
 
 ##Install
 1. Unzip and copy the 'image-box-block' folder to your concrete5 installations 'packages' folder. **(check the folder name, it's important)**
