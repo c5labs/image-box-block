@@ -69,12 +69,8 @@ defined('C5_EXECUTE') or die('Access Denied.');
 				</div>
 				<div id="imageHolder"></div>
 			</div>
-			<?php if ($json_file) { ?>
 			<script>
-				window.image_block_file = <?php echo $json_file; ?>;
-			</script>
-			<?php } ?>
-			<script>
+				window.image_block_file = <?php echo (isset($json_file) ? $json_file : 'null'); ?>;
 				window.image_block_dimensions = <?php echo json_encode($thumbnail_dimensions); ?>
 			</script>
 		</div>

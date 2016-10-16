@@ -150,7 +150,7 @@ class Controller extends BlockController
         if ($this->getImageFileObject()) {
             $this->set('json_file', json_encode([
                 'resultsThumbnailImg' => '<img src="'.$this->getImageFileObject()->getThumbnailURL('file_manager_listing').'">',
-                'fID' => $fID,
+                'fID' => $this->fID,
             ]));
         }
 

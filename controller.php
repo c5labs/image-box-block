@@ -142,6 +142,26 @@ class Controller extends Package
         return $pkg;
     }
 
+    /**
+     * The packages upgrade routine.
+     * 
+     * @return void
+     */
+    public function upgrade()
+    {
+        parent::upgrade();
+
+        if (! \Concrete\Core\File\Image\Thumbnail\Type\Type::getByHandle('image_box_image')) {
+            // Install the file type
+            $type = new \Concrete\Core\File\Image\Thumbnail\Type\Type;
+            $type->setHandle('image_box_image');
+            $type->setName('Image Box Image');
+            $type->setWidth(360);
+            $type->setHeight(200);
+            $type->save();
+        }
+    }
+
     public function uninstall()
     {
         // Remove the file type
