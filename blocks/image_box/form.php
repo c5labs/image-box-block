@@ -24,12 +24,59 @@ defined('C5_EXECUTE') or die('Access Denied.');
 		margin-top: 0;
 	}
 
+	#imageHolderSelect {
+		position: absolute; 
+		top: 0; left: 0; right: 0; bottom: 0; 
+		text-align: center; 
+		font-weight: bold; 
+		color: #999; 
+		text-transform: uppercase; 
+		cursor: pointer;
+	}
+
+	#imageHolderSelect span {
+		position: absolute; 
+		top: 50%; left: 0; right: 0; 
+		transform: translateY(-50%);
+	}
+
+	#imageHolderWrapper {
+		position: relative;
+	}
+
+	#imageHolderWrapper img {
+		max-width: 100%;
+	}
+
+	#imageHolderWrapper.selectable #imageHolderSelect {
+		display: none;
+	}
+
+	#imageHolderWrapper.selectable:hover #imageHolderSelect {
+		display: block;
+		color: #eee;
+		background-color: rgba(0, 0, 0, 0.5);
+	}
 </style>
 <div id="imageBlockForm" class="row">
 	<fieldset>
 		<div class="form-group">
 			<label for="fID"><?php echo t('Image')?></label>
-			<?php echo $asset_library->image('ccm-b-image', 'fID', t('Choose Image'), $image_file);?>
+			<?php echo $form->hidden('fID', $fID); ?>
+			<div id="imageHolderWrapper" style="background-color: #eee; min-height: 188px;">
+				<div id="imageHolderSelect" style="">
+					<span style="">Choose Image</span>
+				</div>
+				<div id="imageHolder"></div>
+			</div>
+			<?php if ($json_file) { ?>
+			<script>
+				window.image_block_file = <?php echo $json_file; ?>;
+			</script>
+			<?php } ?>
+			<script>
+				window.image_block_dimensions = <?php echo json_encode($thumbnail_dimensions); ?>
+			</script>
 		</div>
 
 		<div class="form-group">
@@ -45,21 +92,6 @@ defined('C5_EXECUTE') or die('Access Denied.');
 		<div class="form-group">
 			<label for="link_type"><?php echo t('Link Type')?></label>
 			<?php echo $form->select('link_type', ['none' => 'None', 'manual' => 'Manual', 'page_selector' => 'Page Selector'], $controller->link_type ?: 'page_selector', ['class' => 'form-control']); ?>
-			<script>
-			$(function(){
-				$('select[name=link_type]').change(function(){
-					if ('page_selector' === $(this).val()) {
-						$('#pageSelector, #buttonText').show();
-						$('#manualLink').hide();
-					} else if ('manual' === $(this).val()) {
-						$('#pageSelector').hide();
-						$('#manualLink, #buttonText').show();
-					} else {
-						$('#pageSelector, #manualLink, #buttonText').hide();
-					}
-				}).trigger('change');
-			});
-			</script>
 		</div>
 
 		<div id="manualLink" class="form-group" style="display: none;">
@@ -79,3 +111,4 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
 	</fieldset>
 </div>
+<script src="<?php echo $this->getBlockUrl(); ?>/form.js"></script>

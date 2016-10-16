@@ -143,11 +143,26 @@ class Controller extends BlockController
     {
         $form = Loader::helper('form');
         $ps = Loader::helper('form/page_selector');
-        $al = Loader::helper('concrete/asset_library');
+        $this->requireAsset('core/file-manager');
+        $this->requireAsset('javascript', 'jquery');
+
+        // Set the current file.
+        if ($this->getImageFileObject()) {
+            $this->set('json_file', json_encode([
+                'resultsThumbnailImg' => '<img src="'.$this->getImageFileObject()->getThumbnailURL('file_manager_listing').'">',
+                'fID' => $fID,
+            ]));
+        }
+
+        // Type size.
+        $type = \Concrete\Core\File\Image\Thumbnail\Type\Type::getByHandle('image_box_image');
+        $this->set('thumbnail_dimensions', [
+            'width' => $type->getWidth(),
+            'height' => $type->getHeight(),
+        ]);
 
         $this->set('image_file', $this->getImageFileObject());
         $this->set('page_selector', $ps);
-        $this->set('asset_library', $al);
         $this->set('form', $form);
     }
 
@@ -202,9 +217,9 @@ class Controller extends BlockController
     public function getImageUrl()
     {
         if ($this->fID > 0) {
-            $f = $this->getImageFileObject()->getRecentVersion();
+            $f = $this->getImageFileObject();
 
-            return $f->getUrl();
+            return $f->getThumbnailURL('image_box_image');
         }
 
         return '';
