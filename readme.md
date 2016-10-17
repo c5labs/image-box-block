@@ -10,7 +10,7 @@ A block to allow easy addition of combined image, text & link units.
 5. Navigate to a page, add the block, follow the on screen instructions.
 
 ## Support
-Developers should open an issue here, for all other support please file a support ticket [here](https://c5dev.com/support?addon=Image+Box).
+Developers should open an issue here, for all other support please file a support ticket [here](https://c5labs.com/support?addon=Image+Box).
 
 ## Change Log
 [Click here](https://github.com/olsgreen/image-box-block/releases) to see the release information on GitHub for an accurate change log.

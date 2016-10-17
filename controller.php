@@ -4,9 +4,9 @@
  *
  * PHP version 5.4
  *
- * @author   Oliver Green <oliver@c5dev.com>
+ * @author   Oliver Green <oliver@c5labs.com>
  * @license  http://www.gnu.org/copyleft/gpl.html GPL3
- * @link     https://c5dev.com/add-ons/image-box
+ * @link     https://c5labs.com/add-ons/image-box
  */
 namespace Concrete\Package\ImageBoxBlock;
 
@@ -22,9 +22,9 @@ use Illuminate\Filesystem\Filesystem;
 /**
  * Package Controller Class.
  *
- * @author   Oliver Green <oliver@c5dev.com>
+ * @author   Oliver Green <oliver@c5labs.com>
  * @license  http://www.gnu.org/copyleft/gpl.html GPL3
- * @link     https://c5dev.com/add-ons/image-box
+ * @link     https://c5labs.com/add-ons/image-box
  */
 class Controller extends Package
 {
