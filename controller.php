@@ -84,7 +84,9 @@ class Controller extends Package
          */
         $router = Core::make(\Concrete\Core\Routing\Router::class);
         $router->register('/ccm/system/image-box-block/current-file-version-resolver/{fID}', function($fID) {
+            $fID = \Loader::helper('security')->sanitizeInt($fID);
             $file = File::getById($fID);
+
             if ($file instanceof File) {
 
                 // If we don't have a valid thumbnail, generate them.
@@ -106,6 +108,7 @@ class Controller extends Package
          */
         $router = Core::make(\Concrete\Core\Routing\Router::class);
         $router->register('/ccm/system/image-box-block/dimensions/{fID}', function($fID) {
+            $fID = \Loader::helper('security')->sanitizeInt($fID);
             $file = File::getById($fID);
             $type = $file->getTypeObject();
 

@@ -155,7 +155,7 @@ class Controller extends BlockController
         }
 
         // Type size.
-        $type = \Concrete\Core\File\Image\Thumbnail\Type\Type::getByHandle('image_box_image');
+        $type = \Concrete\Core\File\Image\Thumbnail\Type\Type::getByHandle('image_box_image')->getDoubledVersion();
         $this->set('thumbnail_dimensions', [
             'width' => $type->getWidth(),
             'height' => $type->getHeight(),
@@ -219,7 +219,7 @@ class Controller extends BlockController
         if ($this->fID > 0) {
             $f = $this->getImageFileObject();
 
-            return $f->getThumbnailURL('image_box_image');
+            return $f->getThumbnailURL('image_box_image_2x');
         }
 
         return '';

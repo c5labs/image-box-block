@@ -59,7 +59,7 @@
         function attachImage(file)
         {
             if (typeof file.resultsThumbnailImg === 'string') {
-                var $img = $(file.resultsThumbnailImg.replace('file_manager_listing', 'image_box_image'));
+                var $img = $(file.resultsThumbnailImg.replace('file_manager_listing', 'image_box_image_2x'));
             } else {
                 var $img = $('<img></img>');
                 $img.prop('src', file.imgData);
@@ -110,7 +110,7 @@
                 return false;
             }
 
-            var d = $.fn.dialog.open({ href: CCM_REL+'/index.php/ccm/system/dialogs/file/thumbnails/edit?fID='+file.fID+'&fvID='+file.fvID+'&thumbnail=image_box_image', width: '90%', height: '70%'});
+            var d = $.fn.dialog.open({ href: CCM_REL+'/index.php/ccm/system/dialogs/file/thumbnails/edit?fID='+file.fID+'&fvID='+file.fvID+'&thumbnail=image_box_image_2x', width: '90%', height: '70%'});
 
             Concrete.event.unbind('ImageEditorDidSave.thumbnails');
             Concrete.event.bind('ImageEditorDidSave.thumbnails', function(event, data) {
