@@ -63,7 +63,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 		<div class="form-group">
 			<label for="fID"><?php echo t('Image')?></label>
 			<?php echo $form->hidden('fID', $fID); ?>
-			<div id="imageHolderWrapper" style="background-color: #eee; min-height: 188px;">
+			<div id="imageHolderWrapper" style="background-color: #eee; min-height: 180px;">
 				<div id="imageHolderSelect" style="">
 					<span style="">Choose Image</span>
 				</div>
@@ -71,7 +71,8 @@ defined('C5_EXECUTE') or die('Access Denied.');
 			</div>
 			<script>
 				window.image_block_file = <?php echo (isset($json_file) ? $json_file : 'null'); ?>;
-				window.image_block_dimensions = <?php echo json_encode($thumbnail_dimensions); ?>
+				window.image_block_dimensions = <?php echo json_encode($thumbnail_dimensions); ?>;
+				window.image_block_force_crop = <?php echo (\Config::get('app.image-box-block.crop', false) ? 'true' : 'false'); ?>;
 			</script>
 		</div>
 

@@ -37,7 +37,7 @@
 
                                 var aspect_ratio = image_block_dimensions.width / image_block_dimensions.height;
 
-                                if (! file.canEditFile || (dimensions.width / dimensions.height) === aspect_ratio) {
+                                if (! window.image_block_force_crop || ! file.canEditFile || (dimensions.width / dimensions.height) === aspect_ratio) {
                                     attachImage(file);
                                 } else {
                                     cropImage(file);
