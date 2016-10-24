@@ -72,7 +72,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 			<script>
 				window.image_block_file = <?php echo (isset($json_file) ? $json_file : 'null'); ?>;
 				window.image_block_dimensions = <?php echo json_encode($thumbnail_dimensions); ?>;
-				window.image_block_force_crop = <?php echo (\Config::get('app.image-box-block.crop', false) ? 'true' : 'false'); ?>;
+				window.image_block_force_crop = <?php echo (\Config::get('app.image-box-block.crop', true) ? 'true' : 'false'); ?>;
 			</script>
 		</div>
 
