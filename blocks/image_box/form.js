@@ -1,4 +1,4 @@
-(function($){
+(function($, w){
     "use strict";
 
     var wirePageSelector = function () {
@@ -18,8 +18,8 @@
     wireImageSelector = function () {
 
         // Attach the existing image.
-        if (window.image_block_file) {
-            attachImage(window.image_block_file);
+        if (w.image_block_editor.file) {
+            attachImage(w.image_block_editor.file);
         }
 
         // Wire the add image button
@@ -30,14 +30,14 @@
                     for(var i = 0; i < r.files.length; i++) {
                         if ('Image' === r.files[i].genericTypeText) {
                             getDimensions(r.files[i], function(file, dimensions) {
-                                if (dimensions.width < image_block_dimensions.width || dimensions.height < image_block_dimensions.height) {
+                                if (dimensions.width < w.image_block_editor.dimensions.width || dimensions.height < w.image_block_editor.dimensions.height) {
                                     alert('The image you selected is too small.');
                                     return;
                                 }
 
-                                var aspect_ratio = image_block_dimensions.width / image_block_dimensions.height;
+                                var aspect_ratio = w.image_block_editor.dimensions.width / w.image_block_editor.dimensions.height;
 
-                                if (! window.image_block_force_crop || ! file.canEditFile || (dimensions.width / dimensions.height) === aspect_ratio) {
+                                if (! w.image_block_editor.crop_prompt || ! file.canEditFile || (dimensions.width / dimensions.height) === aspect_ratio) {
                                     attachImage(file);
                                 } else {
                                     cropImage(file);
@@ -121,4 +121,4 @@
             });
         }
     }();
-}(jQuery));
+}(jQuery, window));

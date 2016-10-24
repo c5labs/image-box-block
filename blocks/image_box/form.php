@@ -69,11 +69,6 @@ defined('C5_EXECUTE') or die('Access Denied.');
 				</div>
 				<div id="imageHolder"></div>
 			</div>
-			<script>
-				window.image_block_file = <?php echo (isset($json_file) ? $json_file : 'null'); ?>;
-				window.image_block_dimensions = <?php echo json_encode($thumbnail_dimensions); ?>;
-				window.image_block_force_crop = <?php echo (\Config::get('app.image-box-block.crop', true) ? 'true' : 'false'); ?>;
-			</script>
 		</div>
 
 		<div class="form-group">
@@ -108,4 +103,12 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
 	</fieldset>
 </div>
+
+<script>
+	window.image_block_editor = {
+		'file': <?php echo (isset($json_file) ? $json_file : 'null'); ?>,
+		'dimensions': <?php echo json_encode($thumbnail_dimensions); ?>,
+		'crop_prompt': <?php echo (\Config::get('app.image-box-block.crop', true) ? 'true' : 'false'); ?>
+	};
+</script>
 <script src="<?php echo $this->getBlockUrl(); ?>/form.js"></script>
