@@ -1,0 +1,46 @@
+#imageBlockForm {
+    padding: 10px 15px;
+}
+
+#manualLink,
+#pageSelector {
+    display: none;
+}
+
+div.ccm-page-selector {
+    margin-top: 0;
+}
+
+#imageHolderSelect {
+    position: absolute; 
+    top: 0; left: 0; right: 0; bottom: 0; 
+    text-align: center; 
+    font-weight: bold; 
+    color: #999; 
+    text-transform: uppercase; 
+    cursor: pointer;
+}
+
+#imageHolderSelect span {
+    position: absolute; 
+    top: 50%; left: 0; right: 0; 
+    transform: translateY(-50%);
+}
+
+#imageHolderWrapper {
+    position: relative;
+}
+
+#imageHolderWrapper img {
+    max-width: 100%;
+}
+
+#imageHolderWrapper.selectable #imageHolderSelect {
+    display: none;
+}
+
+#imageHolderWrapper.selectable:hover #imageHolderSelect {
+    display: block;
+    color: #eee;
+    background-color: rgba(0, 0, 0, 0.5);
+}

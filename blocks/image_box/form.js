@@ -1,6 +1,23 @@
 (function($, w){
     "use strict";
 
+    w.image_block_editor = {};
+
+    // Attach an image
+    w.image_block_editor.setImage = function(file)
+    {
+        if (typeof file.resultsThumbnailImg === 'string') {
+            var $img = $(file.resultsThumbnailImg.replace('file_manager_listing', 'image_box_image_2x'));
+        } else {
+            var $img = $('<img></img>');
+            $img.prop('src', file.imgData);
+        }
+        $('#imageHolderWrapper').addClass('selectable');
+        $('#imageHolder').empty().append($img);
+        $('input[name=fID]').val(file.fID);
+        $('#imageHolderSelect span').html('Change Image');
+    };
+
     var wirePageSelector = function () {
         $('select[name=link_type]').change(function(){
             if ('page_selector' === $(this).val()) {
@@ -16,11 +33,6 @@
     }(),
 
     wireImageSelector = function () {
-
-        // Attach the existing image.
-        if (w.image_block_editor.file) {
-            attachImage(w.image_block_editor.file);
-        }
 
         // Wire the add image button
         $('#imageHolderSelect').click(function () {
@@ -38,7 +50,7 @@
                                 var aspect_ratio = w.image_block_editor.dimensions.width / w.image_block_editor.dimensions.height;
 
                                 if (! w.image_block_editor.crop_prompt || ! file.canEditFile || (dimensions.width / dimensions.height) === aspect_ratio) {
-                                    attachImage(file);
+                                    w.image_block_editor.setImage(file);
                                 } else {
                                     cropImage(file);
                                 }
@@ -54,21 +66,6 @@
 
             }, { 'multipleSelection' : false });
         });
-
-        // Attach an image
-        function attachImage(file)
-        {
-            if (typeof file.resultsThumbnailImg === 'string') {
-                var $img = $(file.resultsThumbnailImg.replace('file_manager_listing', 'image_box_image_2x'));
-            } else {
-                var $img = $('<img></img>');
-                $img.prop('src', file.imgData);
-            }
-            $('#imageHolderWrapper').addClass('selectable');
-            $('#imageHolder').empty().append($img);
-            $('input[name=fID]').val(file.fID);
-            $('#imageHolderSelect span').html('Change Image');
-        }
 
         function getDimensions(file, success, fail)
         {
@@ -115,7 +112,7 @@
             Concrete.event.unbind('ImageEditorDidSave.thumbnails');
             Concrete.event.bind('ImageEditorDidSave.thumbnails', function(event, data) {
                 if (data.isThumbnail) {
-                    attachImage(data);
+                    w.image_block_editor.setImage(data);
                     $.fn.dialog.closeTop();
                 }
             });

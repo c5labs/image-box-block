@@ -13,6 +13,7 @@ namespace Concrete\Package\ImageBoxBlock\Block\ImageBox;
 defined('C5_EXECUTE') or die('Access Denied.');
 
 use Concrete\Core\Block\BlockController;
+use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\File\File;
 use Concrete\Core\Legacy\Loader;
 use Concrete\Core\Page\Page;
@@ -143,6 +144,10 @@ class Controller extends BlockController
     {
         $form = Loader::helper('form');
         $ps = Loader::helper('form/page_selector');
+
+        $v = new \Concrete\Core\Block\View\BlockView(BlockType::getByHandle($this->btHandle));
+        $this->addHeaderItem('<link href="'.$v->getBlockURL().'/form.css" rel="stylesheet" type="text/css">');
+        $this->addHeaderItem('<script src="'.$v->getBlockURL().'/form.js"></script>');
         $this->requireAsset('core/file-manager');
         $this->requireAsset('javascript', 'jquery');
 

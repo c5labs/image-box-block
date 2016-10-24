@@ -9,55 +9,6 @@ defined('C5_EXECUTE') or die('Access Denied.');
  * @link     https://c5labs.com/add-ons/image-box
  */
 ?>
-
-<style>
-	#imageBlockForm {
-		padding: 10px 15px;
-	}
-
-	#manualLink,
-	#pageSelector {
-		display: none;
-	}
-
-	div.ccm-page-selector {
-		margin-top: 0;
-	}
-
-	#imageHolderSelect {
-		position: absolute; 
-		top: 0; left: 0; right: 0; bottom: 0; 
-		text-align: center; 
-		font-weight: bold; 
-		color: #999; 
-		text-transform: uppercase; 
-		cursor: pointer;
-	}
-
-	#imageHolderSelect span {
-		position: absolute; 
-		top: 50%; left: 0; right: 0; 
-		transform: translateY(-50%);
-	}
-
-	#imageHolderWrapper {
-		position: relative;
-	}
-
-	#imageHolderWrapper img {
-		max-width: 100%;
-	}
-
-	#imageHolderWrapper.selectable #imageHolderSelect {
-		display: none;
-	}
-
-	#imageHolderWrapper.selectable:hover #imageHolderSelect {
-		display: block;
-		color: #eee;
-		background-color: rgba(0, 0, 0, 0.5);
-	}
-</style>
 <div id="imageBlockForm" class="row">
 	<fieldset>
 		<div class="form-group">
@@ -105,10 +56,12 @@ defined('C5_EXECUTE') or die('Access Denied.');
 </div>
 
 <script>
-	window.image_block_editor = {
-		'file': <?php echo (isset($json_file) ? $json_file : 'null'); ?>,
+	window.image_block_editor = $.extend(window.image_block_editor, {
 		'dimensions': <?php echo json_encode($thumbnail_dimensions); ?>,
 		'crop_prompt': <?php echo (\Config::get('app.image-box-block.crop', true) ? 'true' : 'false'); ?>
-	};
+	});
+
+	<?php if (isset($json_file)) { ?>
+		window.image_block_editor.setImage(<?php echo $json_file; ?>);
+	<?php } ?>
 </script>
-<script src="<?php echo $this->getBlockUrl(); ?>/form.js"></script>
