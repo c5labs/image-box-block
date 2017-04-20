@@ -9,7 +9,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
  * @link     https://c5labs.com/add-ons/image-box
  */
 ?>
-<div class="image-box">
+<div class="image-box<?php echo (! empty($this->controller->getImageUrl())) ? ' image-box-has-image' : '' ?>">
 	<div class="image-box-outer">
 		<?php if (! empty($this->controller->getImageUrl())) {
     ?>
