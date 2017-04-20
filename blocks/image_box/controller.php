@@ -18,6 +18,7 @@ use Concrete\Core\File\File;
 use Concrete\Core\Legacy\Loader;
 use Concrete\Core\Page\Page;
 use Concrete\Core\View\View;
+use Core;
 
 /**
  * Block Controller Class.
@@ -208,9 +209,9 @@ class Controller extends BlockController
         if ('page_selector' !== $this->link_type) {
             return $this->link;
         } else {
-            $path = Page::getByID($this->linkCID)->getCollectionPath();
-
-            return View::url($path ?: '/');
+            $page = Page::getByID($this->linkCID);
+            
+            return Core::make('helper/navigation')->getLinkToCollection($page);
         }
     }
 
