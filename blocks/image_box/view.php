@@ -33,8 +33,14 @@ defined('C5_EXECUTE') or die('Access Denied.');
 		<?php if (! empty($title) || ! empty($content)) {
     ?>
 			<div class="image-box-inner">
+            <?php if (! empty($this->controller->getLinkUrl())) {
+    ?>
+                <a class="image-box-link" href="<?php echo $this->controller->getLinkUrl();
+    ?>"><?php } ?>
 				<h2><?php echo $title;
-    ?></h2>
+    ?></h2>            <?php if (! empty($this->controller->getLinkUrl())) {
+    ?>
+                </a><?php } ?>
 				<span><?php echo $content;
     ?></span>
 				<?php if (! empty($button_text) && ! empty($this->controller->getLinkUrl())) {
