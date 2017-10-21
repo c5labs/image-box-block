@@ -136,6 +136,11 @@ class Controller extends Package
 
         // Install the file type
         $type = new \Concrete\Core\File\Image\Thumbnail\Type\Type;
+
+        if (class_exists(\Concrete\Core\Entity\File\Image\Thumbnail\Type\Type::class)) {
+            $type = new \Concrete\Core\Entity\File\Image\Thumbnail\Type\Type;
+        }
+
         $type->setHandle('image_box_image');
         $type->setName('Image Box Image');
         $type->setWidth(360);
