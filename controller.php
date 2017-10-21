@@ -87,7 +87,7 @@ class Controller extends Package
             $fID = \Loader::helper('security')->sanitizeInt($fID);
             $file = File::getById($fID);
 
-            if ($file instanceof File) {
+            if (isset($file)) {
 
                 // If we don't have a valid thumbnail, generate them.
                 $thumbnails = array_map(function($item) {
@@ -112,7 +112,7 @@ class Controller extends Package
             $file = File::getById($fID);
             $type = $file->getTypeObject();
 
-            if ($file instanceof File && \Concrete\Core\File\Type\Type::T_IMAGE === intval($type->getGenericType())) {
+            if (isset($file) && \Concrete\Core\File\Type\Type::T_IMAGE === intval($type->getGenericType())) {
                 return new Response(json_encode([
                     'width' => $file->getAttribute('width'), 
                     'height' => $file->getAttribute('height')
