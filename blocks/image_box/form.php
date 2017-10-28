@@ -10,7 +10,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
  */
 ?>
 <div id="imageBlockForm" class="row">
-	<fieldset>
+	<fieldset style="width: 100%;">
 		<div class="form-group">
 			<label for="fID"><?php echo t('Image')?></label>
 			<?php echo $form->hidden('fID', $fID); ?>
@@ -34,7 +34,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
 		<div class="form-group">
 			<label for="link_type"><?php echo t('Link Type')?></label>
-			<?php echo $form->select('link_type', ['none' => 'None', 'manual' => 'Manual', 'page_selector' => 'Page Selector'], $controller->link_type ?: 'page_selector', ['class' => 'form-control']); ?>
+			<?php echo $form->select('link_type', ['none' => 'None', 'manual' => 'Manual', 'page_selector' => 'Page Selector'], $controller->link_type ?: 'none', ['class' => 'form-control']); ?>
 		</div>
 
 		<div id="manualLink" class="form-group" style="display: none;">
