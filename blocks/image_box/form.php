@@ -39,7 +39,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
 		<div id="manualLink" class="form-group" style="display: none;">
 			<label for="link"><?php echo t('Link')?></label>
-			<?php echo $form->text('link', $controller->link, ['class' => 'form-control']); ?>
+			<?php echo $form->text('link', $controller->getLinkUrl(), ['class' => 'form-control']); ?>
 		</div>
 
 		<div id="pageSelector" class="form-group" style="display: none;">

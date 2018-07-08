@@ -187,7 +187,7 @@ class Controller extends BlockController
             $args['link'] = '';
             $args['button_text'] = '';
         } elseif ('manual' === $args['link_type']) {
-            $args['link_type'] = LinkAbstractor::translateTo($args['link_type']);
+            $args['link'] = LinkAbstractor::translateTo($args['link']);
         }
 
         return parent::save($args);

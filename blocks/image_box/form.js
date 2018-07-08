@@ -31,7 +31,7 @@
                 $('#pageSelector, #manualLink, #buttonText').hide();
             }
         }).trigger('change');
-    }(),
+    },
 
     wireImageSelector = function () {
 
@@ -127,5 +127,10 @@
                 }
             });
         }
-    }();
+    };
+
+    $(function() {
+        wirePageSelector();
+        wireImageSelector();
+    });
 }(jQuery, window));
