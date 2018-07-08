@@ -161,7 +161,7 @@ class Controller extends BlockController
         }
 
         // Type size.
-        $type = \Concrete\Core\File\Image\Thumbnail\Type\Type::getByHandle('image_box_image')->getDoubledVersion();
+        $type = \Concrete\Core\File\Image\Thumbnail\Type\Type::getByHandle($this->getThumbnailTypeHandle())->getDoubledVersion();
         $this->set('thumbnail_dimensions', [
             'width' => $type->getWidth(),
             'height' => $type->getHeight(),
@@ -170,6 +170,7 @@ class Controller extends BlockController
         $this->set('image_file', $this->getImageFileObject());
         $this->set('page_selector', $ps);
         $this->set('form', $form);
+        $this->set('thumbnail_handle', $this->getThumbnailTypeHandle());
     }
 
     /**
@@ -215,6 +216,78 @@ class Controller extends BlockController
         }
     }
 
+    protected function guessTemplateThumbnailTypeHandle()
+    {
+        $bvt = new \Concrete\Core\Block\View\BlockViewTemplate(
+            $this->getBlockObject()
+        );
+
+        $filename = pathinfo($bvt->getTemplate(), PATHINFO_BASENAME);
+
+        $dirname = basename(pathinfo($bvt->getTemplate(), PATHINFO_DIRNAME));
+
+        if ('view.php' === strtolower($filename) && 'templates' !== strtolower($dirname)) {
+            return 'image_box_image_' . $dirname;
+        } elseif ('view.php' !== strtolower($filename)) {
+            $filename = explode('.', $filename);
+            return 'image_box_image_' . array_shift($filename);
+        }
+
+        return 'image_box_image';
+    }
+
+    protected function rescanThumbnails()
+    {
+        $file = $this->getImageFileObject();
+
+        $file->rescanThumbnails();
+    }
+
+    protected function getFileThumbnailHandles()
+    {
+        $file = $this->getImageFileObject();
+
+        return array_map(function($item) {
+            return $item->getThumbnailTypeVersionObject()->getHandle();
+        }, $file->getThumbnails());
+    }
+
+    protected function isValidThumbnailHandle($handle)
+    {
+        // If we don't have a valid thumbnail, generate them.
+        $version = \Concrete\Core\File\Image\Thumbnail\Type\Version::getByHandle($handle);
+
+        if (!$version) {
+            return false;
+        }
+
+        $thumbnails = $this->getFileThumbnailHandles();
+
+        if (!in_array($handle, $thumbnails)) {
+            $this->rescanThumbnails();
+
+            $thumbnails = $this->getFileThumbnailHandles();
+
+            if (! in_array($handle, $thumbnails)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function getThumbnailTypeHandle()
+    {
+        $thumbnailHandle = $this->guessTemplateThumbnailTypeHandle();
+
+        if (!$this->isValidThumbnailHandle($thumbnailHandle)) {
+            $thumbnailHandle = 'image_box_image';
+        }
+
+        return $thumbnailHandle;
+    }
+
+
     /**
      * Get the associated images URL.
      *
@@ -223,9 +296,11 @@ class Controller extends BlockController
     public function getImageUrl()
     {
         if ($this->fID > 0) {
-            $f = $this->getImageFileObject();
+            $thumbnailHandle = $this->getThumbnailTypeHandle();
 
-            return $f->getThumbnailURL('image_box_image_2x');
+            $file = $this->getImageFileObject();
+            
+            return $file->getThumbnailURL($thumbnailHandle.'_2x');
         }
 
         return '';

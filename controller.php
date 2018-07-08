@@ -47,7 +47,7 @@ class Controller extends Package
      *
      * @var string
      */
-    protected $pkgVersion = '0.9.0';
+    protected $pkgVersion = '0.9.1';
 
     /**
      * Keep me updated interest ID.
@@ -76,6 +76,18 @@ class Controller extends Package
         return t('A block to allow easy addition of combined image, text & link units.');
     }
 
+    protected function possiblyRescanThumbnails($file)
+    {
+        // If we don't have a valid thumbnail, generate them.
+        $thumbnails = array_map(function($item) {
+            return $item->getThumbnailTypeVersionObject()->getHandle();
+        }, $file->getThumbnails());
+        
+        if (! in_array(filter_var($_GET['thumbnail_handle'], FILTER_SANITIZE_STRING), $thumbnails)) {
+            $file->rescanThumbnails();
+        }
+    }
+
     public function on_start()
     {
         /**
@@ -88,15 +100,7 @@ class Controller extends Package
             $file = File::getById($fID);
 
             if (isset($file)) {
-
-                // If we don't have a valid thumbnail, generate them.
-                $thumbnails = array_map(function($item) {
-                    return $item->getThumbnailTypeVersionObject()->getHandle();
-                }, $file->getThumbnails());
-
-                if (! in_array('image_box_image', $thumbnails)) {
-                    $file->rescanThumbnails();
-                }
+               $this->possiblyRescanThumbnails($file);
 
                 return new Response(json_encode($file->getFileVersionID()), 200);
             }
@@ -113,6 +117,8 @@ class Controller extends Package
             $type = $file->getTypeObject();
 
             if (isset($file) && \Concrete\Core\File\Type\Type::T_IMAGE === intval($type->getGenericType())) {
+                $this->possiblyRescanThumbnails($file);
+
                 return new Response(json_encode([
                     'width' => $file->getAttribute('width'), 
                     'height' => $file->getAttribute('height')

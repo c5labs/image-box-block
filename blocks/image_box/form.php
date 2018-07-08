@@ -14,11 +14,11 @@ defined('C5_EXECUTE') or die('Access Denied.');
 		<div class="form-group">
 			<label for="fID"><?php echo t('Image')?></label>
 			<?php echo $form->hidden('fID', $fID); ?>
-			<div id="imageHolderWrapper" style="background-color: #eee; min-height: 180px;">
+			<div id="imageHolderWrapper" data-thumbnail-type-handle="<?php echo $thumbnail_handle; ?>" style="background-color: #eee; min-height: 150px;">
 				<div id="imageHolderSelect" style="">
 					<span style="">Choose Image</span>
 				</div>
-				<div id="imageHolder"></div>
+				<div id="imageHolder" style="text-align: center;"></div>
 			</div>
 		</div>
 

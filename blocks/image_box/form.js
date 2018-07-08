@@ -7,7 +7,8 @@
     w.image_block_editor.setImage = function(file)
     {
         if (typeof file.resultsThumbnailImg === 'string') {
-            var $img = $(file.resultsThumbnailImg.replace('file_manager_listing', 'image_box_image_2x'));
+            var handle = $('#imageHolderWrapper').data('thumbnail-type-handle');
+            var $img = $(file.resultsThumbnailImg.replace('file_manager_listing', handle));
         } else {
             var $img = $('<img></img>');
             $img.prop('src', file.imgData);
@@ -69,8 +70,10 @@
 
         function getDimensions(file, success, fail)
         {
+            var handle = $('#imageHolderWrapper').data('thumbnail-type-handle');
+
             $.ajax({
-                url: CCM_REL+'/index.php/ccm/system/image-box-block/dimensions/'+file.fID,
+                url: CCM_REL+'/index.php/ccm/system/image-box-block/dimensions/'+file.fID+'?thumbnail_handle='+handle,
                 type: 'GET',
                 dataType: 'json',
             })
@@ -84,8 +87,10 @@
 
         function getFvID(file, success, fail)
         {
+            var handle = $('#imageHolderWrapper').data('thumbnail-type-handle');
+
             $.ajax({
-                url: CCM_REL+'/index.php/ccm/system/image-box-block/current-file-version-resolver/'+file.fID,
+                url: CCM_REL+'/index.php/ccm/system/image-box-block/current-file-version-resolver/'+file.fID+'?thumbnail_handle=' + handle,
                 type: 'GET',
                 dataType: 'json',
             })
@@ -107,7 +112,12 @@
                 return false;
             }
 
-            var d = $.fn.dialog.open({ href: CCM_REL+'/index.php/ccm/system/dialogs/file/thumbnails/edit?fID='+file.fID+'&fvID='+file.fvID+'&thumbnail=image_box_image_2x', width: '90%', height: '70%'});
+            var handle = $('#imageHolderWrapper').data('thumbnail-type-handle');
+
+            var d = $.fn.dialog.open({ 
+                href: CCM_REL+'/index.php/ccm/system/dialogs/file/thumbnails/edit?fID='+file.fID+'&fvID='+file.fvID+'&thumbnail='+handle+'_2x', 
+                width: '90%', height: '70%'
+            });
 
             Concrete.event.unbind('ImageEditorDidSave.thumbnails');
             Concrete.event.bind('ImageEditorDidSave.thumbnails', function(event, data) {
