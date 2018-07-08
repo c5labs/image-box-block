@@ -14,6 +14,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
 use Concrete\Core\Block\BlockController;
 use Concrete\Core\Block\BlockType\BlockType;
+use Concrete\Core\Editor\LinkAbstractor;
 use Concrete\Core\File\File;
 use Concrete\Core\Legacy\Loader;
 use Concrete\Core\Page\Page;
@@ -185,6 +186,8 @@ class Controller extends BlockController
             $args['linkCID'] = 0;
             $args['link'] = '';
             $args['button_text'] = '';
+        } elseif ('manual' === $args['link_type']) {
+            $args['link_type'] = LinkAbstractor::translateTo($args['link_type']);
         }
 
         return parent::save($args);
@@ -208,7 +211,7 @@ class Controller extends BlockController
     public function getLinkUrl()
     {
         if ('page_selector' !== $this->link_type) {
-            return $this->link;
+            return LinkAbstractor::translateFrom($this->link);
         } else {
             $page = Page::getByID($this->linkCID);
             
