@@ -221,19 +221,21 @@ class Controller extends BlockController
 
     protected function guessTemplateThumbnailTypeHandle()
     {
-        $bvt = new \Concrete\Core\Block\View\BlockViewTemplate(
-            $this->getBlockObject()
-        );
+        if ($this->getBlockObject()) {
+            $bvt = new \Concrete\Core\Block\View\BlockViewTemplate(
+                $this->getBlockObject()
+            );
 
-        $filename = pathinfo($bvt->getTemplate(), PATHINFO_BASENAME);
+            $filename = pathinfo($bvt->getTemplate(), PATHINFO_BASENAME);
 
-        $dirname = basename(pathinfo($bvt->getTemplate(), PATHINFO_DIRNAME));
+            $dirname = basename(pathinfo($bvt->getTemplate(), PATHINFO_DIRNAME));
 
-        if ('view.php' === strtolower($filename) && 'templates' !== strtolower($dirname)) {
-            return 'image_box_image_' . $dirname;
-        } elseif ('view.php' !== strtolower($filename)) {
-            $filename = explode('.', $filename);
-            return 'image_box_image_' . array_shift($filename);
+            if ('view.php' === strtolower($filename) && 'templates' !== strtolower($dirname)) {
+                return 'image_box_image_' . $dirname;
+            } elseif ('view.php' !== strtolower($filename)) {
+                $filename = explode('.', $filename);
+                return 'image_box_image_' . array_shift($filename);
+            }
         }
 
         return 'image_box_image';
@@ -243,16 +245,22 @@ class Controller extends BlockController
     {
         $file = $this->getImageFileObject();
 
-        $file->rescanThumbnails();
+        if ($file) {
+            $file->rescanThumbnails();
+        }
     }
 
     protected function getFileThumbnailHandles()
     {
         $file = $this->getImageFileObject();
 
-        return array_map(function($item) {
-            return $item->getThumbnailTypeVersionObject()->getHandle();
-        }, $file->getThumbnails());
+        if ($file) {
+            return array_map(function($item) {
+                return $item->getThumbnailTypeVersionObject()->getHandle();
+            }, $file->getThumbnails());
+        }
+
+        return [];
     }
 
     protected function isValidThumbnailHandle($handle)
@@ -303,7 +311,9 @@ class Controller extends BlockController
 
             $file = $this->getImageFileObject();
             
-            return $file->getThumbnailURL($thumbnailHandle.'_2x');
+            if ($file) {
+                return $file->getThumbnailURL($thumbnailHandle.'_2x');
+            }
         }
 
         return '';
