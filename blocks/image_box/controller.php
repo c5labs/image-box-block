@@ -80,16 +80,6 @@ class Controller extends BlockController
     protected $btCacheBlockOutputForRegisteredUsers = false;
 
     /**
-     * How long do we cache the block for?
-     *
-     * CACHE_LIFETIME = Until manually cleared or the
-     * block is updated via the editor.
-     *
-     * @var int
-     */
-    protected $btCacheBlockOutputLifetime = CACHE_LIFETIME; //until manually updated or cleared
-
-    /**
      * The set within the block chooser interface
      * that this block belongs to.
      *
