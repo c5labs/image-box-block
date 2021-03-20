@@ -47,7 +47,7 @@ class Controller extends Package
      *
      * @var string
      */
-    protected $pkgVersion = '0.9.1';
+    protected $pkgVersion = '1.0';
 
     /**
      * Get the package name.
@@ -92,6 +92,8 @@ class Controller extends Package
         $type->setName('Image Box Image');
         $type->setWidth(360);
         $type->setHeight(200);
+        $type->setIsUpscalingEnabled(true);
+        $type->setSizingMode(\Concrete\Core\File\Image\Thumbnail\Type\Type::RESIZE_EXACT);
         $type->save();
 
         return $pkg;
@@ -113,6 +115,8 @@ class Controller extends Package
             $type->setName('Image Box Image');
             $type->setWidth(360);
             $type->setHeight(200);
+            $type->setIsUpscalingEnabled(true);
+            $type->setSizingMode(\Concrete\Core\File\Image\Thumbnail\Type\Type::RESIZE_EXACT);
             $type->save();
         }
     }
