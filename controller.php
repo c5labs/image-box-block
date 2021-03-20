@@ -40,7 +40,7 @@ class Controller extends Package
      *
      * @var string
      */
-    protected $appVersionRequired = '5.7.1';
+    protected $appVersionRequired = '8.5.4';
 
     /**
      * Package version.
@@ -48,13 +48,6 @@ class Controller extends Package
      * @var string
      */
     protected $pkgVersion = '0.9.1';
-
-    /**
-     * Keep me updated interest ID.
-     *
-     * @var string
-     */
-    public $interest_id = 'ebfc805465';
 
     /**
      * Get the package name.
@@ -90,23 +83,6 @@ class Controller extends Package
 
     public function on_start()
     {
-        /**
-         * This is a fix as the current implementation of the asset manger doesn't return 
-         * the fvID for the selected file. We need this for editing the thumbnail.
-         */
-        $router = Core::make(\Concrete\Core\Routing\Router::class);
-        $router->register('/ccm/system/image-box-block/current-file-version-resolver/{fID}', function($fID) {
-            $fID = \Loader::helper('security')->sanitizeInt($fID);
-            $file = File::getById($fID);
-
-            if (isset($file)) {
-               $this->possiblyRescanThumbnails($file);
-
-                return new Response(json_encode($file->getFileVersionID()), 200);
-            }
-            return new Response('404 Not Found', 404);
-        });
-
         /**
          * Enables us to get the dimensions of a file.
          */

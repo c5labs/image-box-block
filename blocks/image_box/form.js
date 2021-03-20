@@ -104,18 +104,10 @@
 
         function cropImage(file)
         {
-            if (! file.fvID) {
-                file.fvID = getFvID(file, function(fvID) {
-                    file.fvID = fvID;
-                    cropImage(file);
-                });
-                return false;
-            }
-
             var handle = $('#imageHolderWrapper').data('thumbnail-type-handle');
 
             var d = $.fn.dialog.open({ 
-                href: CCM_REL+'/index.php/ccm/system/dialogs/file/thumbnails/edit?fID='+file.fID+'&fvID='+file.fvID+'&thumbnail='+handle+'_2x', 
+                href: CCM_REL+'/index.php/ccm/system/dialogs/file/thumbnails/edit?fID='+file.fID+'&thumbnail='+handle+'_2x', 
                 width: '90%', height: '70%'
             });
 
