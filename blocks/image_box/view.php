@@ -19,9 +19,13 @@ defined('C5_EXECUTE') or die('Access Denied.');
     ?>">
 			<?php 
 }
+	$imageUrl = $this->controller->getImageUrl();
+
+	if (Page::getCurrentPage()->isEditMode()) {
+		$imageUrl .= '?v=' . mktime();
+	}
     ?>
-			<img src="<?php echo $this->controller->getImageUrl();
-    ?>" alt="<?php echo $title ?>"></a>
+			<img src="<?php echo $imageUrl; ?>" alt="<?php echo $title ?>"></a>
 			<?php if ('' !== trim($this->controller->getLinkUrl())) {
     ?>
 			</a>

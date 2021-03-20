@@ -20,6 +20,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 				</div>
 				<div id="imageHolder" style="text-align: center;"></div>
 			</div>
+			<button id="cropBtn" class="btn btn-primary" data-fid="<?php echo $fID; ?>" type="button" style="margin-top: .5rem;"><span class="fa fa-undo"></span> Re-crop / position</button>
 		</div>
 
 		<div class="form-group">

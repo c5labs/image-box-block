@@ -17,6 +17,7 @@
         $('#imageHolder').empty().append($img);
         $('input[name=fID]').val(file.fID);
         $('#imageHolderSelect span').html('Change Image');
+        $('#cropBtn').data('fid', file.fID);
     };
 
     var wirePageSelector = function () {
@@ -42,24 +43,12 @@
                     jQuery.fn.dialog.hideLoader();
                     for(var i = 0; i < r.files.length; i++) {
                         if ('Image' === r.files[i].genericTypeText) {
-                            getDimensions(r.files[i], function(file, dimensions) {
-                                if (dimensions.width < w.image_block_editor.dimensions.width || dimensions.height < w.image_block_editor.dimensions.height) {
-                                    alert('The image you selected is too small.');
-                                    return;
-                                }
-
-                                var aspect_ratio = w.image_block_editor.dimensions.width / w.image_block_editor.dimensions.height;
-
-                                if (! w.image_block_editor.crop_prompt || ! file.canEditFile || (dimensions.width / dimensions.height) === aspect_ratio) {
-                                    w.image_block_editor.setImage(file);
-                                } else {
-                                    cropImage(file);
-                                }
-                            }, function () {
-                                alert('The selected file is invalid.');
-                                return;
-                            });
-                        } else {
+                            //if (! w.image_block_editor.crop_prompt || ! r.files[i].canEditFile || ! confirm('Do you want to adjust the cropping of this image?')) {
+                                w.image_block_editor.setImage(r.files[i]);
+                            //} else {
+                              //  cropImage(r.files[i]);
+                            //}
+                        } else {    
                             alert('The file you selected was not an image file.');
                         }
                     }
@@ -68,39 +57,10 @@
             }, { 'multipleSelection' : false });
         });
 
-        function getDimensions(file, success, fail)
-        {
-            var handle = $('#imageHolderWrapper').data('thumbnail-type-handle');
-
-            $.ajax({
-                url: CCM_REL+'/index.php/ccm/system/image-box-block/dimensions/'+file.fID+'?thumbnail_handle='+handle,
-                type: 'GET',
-                dataType: 'json',
-            })
-            .done(function(data) {
-                success(file, data);
-            })
-            .fail(function() {
-                fail();
-            });
-        }
-
-        function getFvID(file, success, fail)
-        {
-            var handle = $('#imageHolderWrapper').data('thumbnail-type-handle');
-
-            $.ajax({
-                url: CCM_REL+'/index.php/ccm/system/image-box-block/current-file-version-resolver/'+file.fID+'?thumbnail_handle=' + handle,
-                type: 'GET',
-                dataType: 'json',
-            })
-            .done(function(data) {
-                success(data);
-            })
-            .fail(function() {
-                fail();
-            });
-        }
+        // Wire th crop button.
+         $('#cropBtn').click(function() {
+            cropImage({ fID: $(this).data('fid')});
+         })
 
         function cropImage(file)
         {

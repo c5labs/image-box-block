@@ -69,41 +69,6 @@ class Controller extends Package
         return t('A block to allow easy addition of combined image, text & link units.');
     }
 
-    protected function possiblyRescanThumbnails($file)
-    {
-        // If we don't have a valid thumbnail, generate them.
-        $thumbnails = array_map(function($item) {
-            return $item->getThumbnailTypeVersionObject()->getHandle();
-        }, $file->getThumbnails());
-        
-        if (! in_array(filter_var($_GET['thumbnail_handle'], FILTER_SANITIZE_STRING), $thumbnails)) {
-            $file->rescanThumbnails();
-        }
-    }
-
-    public function on_start()
-    {
-        /**
-         * Enables us to get the dimensions of a file.
-         */
-        $router = Core::make(\Concrete\Core\Routing\Router::class);
-        $router->register('/ccm/system/image-box-block/dimensions/{fID}', function($fID) {
-            $fID = \Loader::helper('security')->sanitizeInt($fID);
-            $file = File::getById($fID);
-            $type = $file->getTypeObject();
-
-            if (isset($file) && \Concrete\Core\File\Type\Type::T_IMAGE === intval($type->getGenericType())) {
-                $this->possiblyRescanThumbnails($file);
-
-                return new Response(json_encode([
-                    'width' => $file->getAttribute('width'), 
-                    'height' => $file->getAttribute('height')
-                ]), 200);
-            }
-            return new Response('404 Not Found', 404);
-        });
-    }
-
     /**
      * Install routine.
      *
